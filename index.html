@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DN Game Vault – ຄອມພິວເຕີ ແລະ ອຸປະກອນ</title>
+<meta name="description" content="DN Game Vault ຮ້ານອຸປະກອນເກມ ແລະ ຄອມພິວເຕີ ວຽງຈັນ ຂອງແທ້ ມີຮັບປະກັນ ສັ່ງຜ່ານ WhatsApp">
+<meta name="theme-color" content="#060a13">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="lo_LA">
+<meta property="og:site_name" content="DN Game Vault">
+<meta property="og:title" content="DN Game Vault – Premium Gaming Gear">
+<meta property="og:description" content="ຮ້ານອຸປະກອນເກມ ແລະ ຄອມພິວເຕີ ວຽງຈັນ ຂອງແທ້ ມີຮັບປະກັນ">
+<!-- ປ່ຽນ YOUR_DOMAIN ເປັນໂດເມນເວັບຈິງຂອງເຈົ້າ (Facebook ຕ້ອງການລິ້ງເຕັມ ບໍ່ຮັບລິ້ງແບບສັ້ນ) -->
+<meta property="og:image" content="https://YOUR_DOMAIN/assets/img/logo-full.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;600;800&family=Sora:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="topbar">ສິນຄ້າທຸກຊິ້ນມີໃບຮັບປະກັນ · ສັ່ງຜ່ານ WhatsApp ໄດ້ທັນທີ</div>
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="#top"><img src="assets/img/logo.png" alt="" width="36" height="36"> DN Game Vault</a>
+    <div class="search"><input id="q" type="search" placeholder="ຄົ້ນຫາ: ແລັບທ໋ອບ, RAM, SSD..." aria-label="ຄົ້ນຫາສິນຄ້າ"></div>
+    <button class="cartbtn" id="openCart" aria-label="ເປີດກະຕ່າ">ກະຕ່າ<span id="cnt" class="num">0</span></button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-in">
+      <div class="hero-copy">
+        <span class="eyebrow">PREMIUM GAMING GEAR</span>
+        <h1>ອຸປະກອນເກມ ແລະ <span class="grad">ຄອມພິວເຕີ</span><br>ຂອງແທ້ ມີຮັບປະກັນ</h1>
+        <p>ແລັບທ໋ອບ, ຄອມຕັ້ງໂຕະ, ຊິ້ນສ່ວນ ແລະ ອຸປະກອນເກມ ຄັດມາເພື່ອນັກເກມ ແລະ ຄົນເຮັດວຽກ. ສັ່ງງ່າຍຜ່ານ WhatsApp ຮັບເຄື່ອງໃນວຽງຈັນ ຫຼື ສົ່ງທົ່ວປະເທດ.</p>
+        <div class="cta">
+          <a class="btn" href="#products">ເບິ່ງສິນຄ້າທັງໝົດ</a>
+          <a class="btn ghost" id="hero-wa" href="https://wa.me/8562054800302" target="_blank" rel="noopener">ສອບຖາມທາງ WhatsApp</a>
+          <a class="btn ghost" id="fb-btn" href="https://www.facebook.com/profile.php?id=61595551779501" target="_blank" rel="noopener">Facebook</a>
+        </div>
+        <ul class="pts"><li>ໃບຮັບປະກັນທຸກຊິ້ນ</li><li>ກວດສະເປັກກ່ອນສົ່ງ</li><li>ບັນທຶກ Serial ທຸກເຄື່ອງ</li></ul>
+      </div>
+      <div class="hero-art"><img src="assets/img/hero-shield.webp" alt="ໂລໂກ້ DN Game Vault" width="440" height="440"></div>
+    </div>
+  </section>
+
+  <section class="wrap cats rv" id="cats" aria-label="ໝວດສິນຄ້າ">
+    <button class="cat" data-cat="ແລັບທ໋ອບ"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></svg><b>ແລັບທ໋ອບ</b><span>ເກມ · ອອຟຟິດ · ຮຽນ</span></button>
+    <button class="cat" data-cat="ຄອມຕັ້ງໂຕະ"><svg class="ic" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><circle cx="12" cy="9" r="2.5"/><path d="M10 17h4"/></svg><b>ຄອມຕັ້ງໂຕະ</b><span>ຊຸດປະກອບພ້ອມໃຊ້</span></button>
+    <button class="cat" data-cat="ຊິ້ນສ່ວນ"><svg class="ic" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></svg><b>ຊິ້ນສ່ວນ</b><span>RAM · SSD · ການ໌ດຈໍ</span></button>
+    <button class="cat" data-cat="ອຸປະກອນເສີມ"><svg class="ic" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="6"/><path d="M12 7v4"/></svg><b>ອຸປະກອນເສີມ</b><span>ເມົ້າ · ຄີບອດ · ຫູຟັງ</span></button>
+  </section>
+
+  <section class="wrap" id="products">
+    <div class="sec-h rv"><h2>ສິນຄ້າ</h2><p class="muted">ເລືອກໝວດ ຍີ່ຫໍ້ ຫຼື ຊ່ວງລາຄາ ແລ້ວກົດເບິ່ງລາຍລະອຽດ</p></div>
+    <div class="tools">
+      <div class="chips" id="chips" role="group" aria-label="ໝວດສິນຄ້າ"></div>
+      <div class="tsel">
+        <select id="brand" aria-label="ຍີ່ຫໍ້"><option value="">ທຸກຍີ່ຫໍ້</option></select>
+        <select id="prange" aria-label="ຊ່ວງລາຄາ"><option value="">ທຸກລາຄາ</option><option value="0-2000000">ຕ່ຳກວ່າ 2 ລ້ານ</option><option value="2000000-6000000">2–6 ລ້ານ</option><option value="6000000-12000000">6–12 ລ້ານ</option><option value="12000000-">ຫຼາຍກວ່າ 12 ລ້ານ</option></select>
+        <select id="sort" aria-label="ຮຽງລຳດັບ">
+          <option value="def">ຮຽງ: ແນະນຳ</option>
+          <option value="asc">ລາຄາ ຕ່ຳ → ສູງ</option>
+          <option value="desc">ລາຄາ ສູງ → ຕ່ຳ</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="wrap why" aria-label="ເປັນຫຍັງຕ້ອງ DN Game Vault">
+    <div class="sec-h rv"><h2>ເປັນຫຍັງຕ້ອງ DN Game Vault</h2></div>
+    <div class="why-g">
+      <div class="wc rv"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg><h3>ຂອງແທ້ ມີໃບຮັບປະກັນ</h3><p>ທຸກຊິ້ນມີໃບເສັດ ແລະ ບັນທຶກ Serial ເພື່ອເຄລມຮັບປະກັນໄດ້ງ່າຍ.</p></div>
+      <div class="wc rv"><svg class="ic" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4 2.6-2.6z"/></svg><h3>ກວດສະເປັກ ແລະ ທົດສອບ</h3><p>ເຄື່ອງປະກອບ ແລະ ແລັບທ໋ອບຜ່ານການທົດສອບກ່ອນມອບໃຫ້ລູກຄ້າ.</p></div>
+      <div class="wc rv"><svg class="ic" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4V5z"/></svg><h3>ບໍລິການຫຼັງການຂາຍ</h3><p>ມີບັນຫາການໃຊ້ງານ ທັກ WhatsApp ຫາຮ້ານໄດ້ໃນເວລາທຳການ.</p></div>
+      <div class="wc rv"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>ຕິດຕໍ່ຮ້ານໄດ້ຊັດເຈນ</h3><p>ມີທີ່ຢູ່, ແຜນທີ່, ເບີ WhatsApp ແລະ ເພຈ Facebook ໃຫ້ກວດສອບໄດ້.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap steps" aria-label="ຂັ້ນຕອນການສັ່ງຊື້">
+    <div class="sec-h rv"><h2>ສັ່ງຊື້ງ່າຍ 3 ຂັ້ນຕອນ</h2></div>
+    <ol class="st-g">
+      <li class="rv"><span class="n num">1</span><b>ເລືອກສິນຄ້າ</b><p>ໃສ່ສິນຄ້າທີ່ຖືກໃຈລົງກະຕ່າ.</p></li>
+      <li class="rv"><span class="n num">2</span><b>ສັ່ງຜ່ານ WhatsApp</b><p>ກົດສັ່ງຊື້ ລະບົບເປີດແຊັດຫາຮ້ານພ້ອມລາຍການ.</p></li>
+      <li class="rv"><span class="n num">3</span><b>ຢືນຢັນ ແລະ ຮັບເຄື່ອງ</b><p>ຮ້ານຢືນຢັນລາຄາ ແລະ ການຊຳລະ ແລ້ວນັດຮັບ ຫຼື ຈັດສົ່ງ.</p></li>
+    </ol>
+  </section>
+
+  <section class="wrap faq" aria-label="ຄຳຖາມທີ່ພົບບໍ່ຍາກ">
+    <div class="sec-h rv"><h2>ຄຳຖາມທີ່ພົບບໍ່ຍາກ</h2></div>
+    <details class="rv"><summary>ສິນຄ້າມີຮັບປະກັນບໍ?</summary><p>ມີ ໄລຍະຮັບປະກັນສະແດງໃນໜ້າລາຍລະອຽດຂອງແຕ່ລະສິນຄ້າ. ເກັບໃບເສັດໄວ້ ແລະ ນຳມາເຄລມທີ່ຮ້ານໄດ້.</p></details>
+    <details class="rv"><summary>ສັ່ງຊື້ແນວໃດ?</summary><p>ໃສ່ສິນຄ້າລົງກະຕ່າ ກົດ "ສັ່ງຊື້ຜ່ານ WhatsApp" ຮ້ານຈະຢືນຢັນລາຄາ ການຊຳລະ ແລະ ການຮັບເຄື່ອງກັບທ່ານອີກຄັ້ງ.</p></details>
+    <details class="rv"><summary>ຊຳລະເງິນ ແລະ ຈັດສົ່ງແນວໃດ?</summary><p>ເບິ່ງຂໍ້ມູນການຊຳລະ ແລະ ຄ່າສົ່ງໃນກະຕ່າສິນຄ້າ ຫຼື ສອບຖາມທາງ WhatsApp ໄດ້ທຸກເວລາ.</p></details>
+    <details class="rv"><summary>ມາເບິ່ງສິນຄ້າທີ່ຮ້ານໄດ້ບໍ?</summary><p>ໄດ້ ເບິ່ງທີ່ຢູ່ ແຜນທີ່ ແລະ ເວລາເປີດ-ປິດຢູ່ທ້າຍໜ້ານີ້.</p></details>
+  </section>
+
+  <section class="wrap">
+    <div class="cta2 rv">
+      <div><h2>ບໍ່ແນ່ໃຈວ່າຄວນເລືອກຕົວໃດ?</h2><p>ບອກງົບ ແລະ ເກມທີ່ຫຼິ້ນ ທາງຮ້ານຊ່ວຍຈັດສະເປັກທີ່ເໝາະໃຫ້.</p></div>
+      <a class="btn" id="cta-wa" href="https://wa.me/8562054800302" target="_blank" rel="noopener">ປຶກສາຮ້ານທາງ WhatsApp</a>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap foot-g">
+    <div class="fb"><a class="logo" href="#top"><img src="assets/img/logo.png" alt="" width="40" height="40"> DN Game Vault</a><p>Premium Gaming Gear<br>ອຸປະກອນເກມ ແລະ ຄອມພິວເຕີ ວຽງຈັນ</p></div>
+    <div><h4>ຕິດຕໍ່</h4><p>WhatsApp: <a id="f-wa" href="https://wa.me/8562054800302">+856 20 5480 0302</a></p><p>Facebook: <a id="f-fb" href="https://www.facebook.com/profile.php?id=61595551779501" target="_blank" rel="noopener">DN Game Vault</a></p></div>
+    <div><h4>ທີ່ຢູ່ ແລະ ເວລາ</h4><p id="f-addr">ທີ່ຢູ່: ນະຄອນຫຼວງວຽງຈັນ</p><p id="f-hours">ເປີດ: ຈັນ–ເສົາ 08:30–18:00</p><p><a id="f-map" href="#" target="_blank" rel="noopener" hidden>ເບິ່ງແຜນທີ່ຮ້ານ (Google Maps)</a></p></div>
+    <div><h4>ລິ້ງດ່ວນ</h4><p><a href="#products">ສິນຄ້າທັງໝົດ</a></p><p><a href="#cats">ໝວດສິນຄ້າ</a></p><p><a href="#top">ກັບຂຶ້ນເທິງ</a></p></div>
+  </div>
+  <div class="wrap copy">© <span id="yr">2026</span> DN Game Vault. ສະຫງວນລິຂະສິດ.</div>
+</footer>
+
+<a class="fab" id="f-fab" href="https://wa.me/8562054800302" target="_blank" rel="noopener" aria-label="ສອບຖາມທາງ WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z"/></svg></a>
+
+<dialog id="cart" aria-labelledby="ct">
+  <div class="dh"><h2 id="ct">ກະຕ່າສິນຄ້າ</h2><button class="x" id="closeCart" aria-label="ປິດ">&times;</button></div>
+  <div class="items" id="items"></div>
+  <div class="sum">
+    <div class="tot"><span>ລວມ</span><b class="num" id="total">0 ₭</b></div>
+    <details class="payinfo" id="payinfo" hidden><summary>ຊຳລະເງິນ ແລະ ການຈັດສົ່ງ</summary><div id="payinfo-body"></div></details>
+    <input id="name" placeholder="ຊື່ລູກຄ້າ" aria-label="ຊື່ລູກຄ້າ" autocomplete="name">
+    <input id="phone" type="tel" inputmode="tel" placeholder="ເບີໂທ / WhatsApp" aria-label="ເບີໂທ" autocomplete="tel">
+    <input id="addr" placeholder="ທີ່ຢູ່ຈັດສົ່ງ ຫຼື ມາຮັບທີ່ຮ້ານ" aria-label="ທີ່ຢູ່ຈັດສົ່ງ">
+    <a class="btn" id="order" href="#" role="button">ສັ່ງຊື້ຜ່ານ WhatsApp</a>
+    <p class="note">ກົດແລ້ວຈະເປີດ WhatsApp ພ້ອມລາຍການສັ່ງຊື້. ທາງຮ້ານຢືນຢັນລາຄາ ແລະ ການຊຳລະອີກຄັ້ງ.</p>
+  </div>
+</dialog>
+
+<dialog id="detail" aria-labelledby="dt">
+  <div class="dh"><h2 id="dt">ລາຍລະອຽດສິນຄ້າ</h2><button class="x" id="closeD" aria-label="ປິດ">&times;</button></div>
+  <div id="dbody"></div>
+</dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
+<script src="assets/js/app.js"></script>
+<script type="module" src="assets/js/firebase.js"></script>
+</body>
+</html>

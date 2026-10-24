@@ -1,0 +1,195 @@
+/* DN Game Vault – ໜ້າຮ້ານ (ໂໝດມືດແບບເກມມິງ ຕາມໂລໂກ້) */
+:root{--bg:#060a13;--bg2:#0a1222;--surf:#0e1729;--surf2:#131f37;--ink:#e9efff;--mute:#8d9bbb;--line:#1d2b47;
+--cyan:#22d3ee;--violet:#a855f7;--acc:#22d3ee;--acc-ink:#04141a;--grad:linear-gradient(90deg,#22d3ee,#a855f7);
+--hot:#ff5d73;--ok:#34d399;--warn:#fbbf24;--tag:#ffc83d;--tag-ink:#2a2100;color-scheme:dark;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:calc(76px + env(safe-area-inset-top,0px));scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.65 "Noto Sans Lao",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.num{font-family:Sora,"Noto Sans Lao",sans-serif;font-weight:800;letter-spacing:-.01em}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 18px}
+.muted{color:var(--mute)}
+h2{font-size:clamp(22px,3.4vw,30px);margin:0;font-weight:800;line-height:1.3}
+
+/* ແຖບເທິງ + header */
+.topbar{background:linear-gradient(90deg,#0c3b4a,#3b1a63);text-align:center;font-size:14px;padding:6px 12px;color:#dff7ff}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(6,10,19,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:14px;height:66px}
+.logo{display:flex;align-items:center;gap:10px;font-family:Sora,sans-serif;font-weight:800;font-size:20px;text-decoration:none;white-space:nowrap}
+.logo img{border-radius:10px;display:block;box-shadow:0 0 18px rgba(34,211,238,.35)}
+.search{flex:1;min-width:0}
+.search input{width:100%;height:44px;border:1px solid var(--line);border-radius:12px;padding:0 16px;background:var(--surf);color:var(--ink);font:inherit}
+.search input:focus{border-color:var(--cyan);outline:none;box-shadow:0 0 0 3px rgba(34,211,238,.18)}
+.cartbtn{height:44px;padding:0 16px;border:1px solid var(--line);border-radius:12px;background:var(--surf2);color:var(--ink);font-weight:600;white-space:nowrap;transition:.2s}
+.cartbtn:hover{border-color:var(--cyan);box-shadow:0 0 18px rgba(34,211,238,.3)}
+.cartbtn span{background:var(--grad);color:#04141a;border-radius:99px;padding:0 9px;margin-left:8px;font-size:14px}
+
+/* ປຸ່ມ */
+.btn{display:inline-block;background:var(--grad);color:#04141a;border:0;border-radius:12px;padding:12px 22px;font-weight:700;text-decoration:none;text-align:center;transition:.2s;box-shadow:0 8px 24px -10px rgba(34,211,238,.7)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px -8px rgba(168,85,247,.7)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid #2b3d62;box-shadow:none}
+.btn.ghost:hover{border-color:var(--cyan);box-shadow:0 0 20px rgba(34,211,238,.25)}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;padding:52px 0 44px;background:radial-gradient(60% 90% at 85% 10%,rgba(168,85,247,.28),transparent 62%),radial-gradient(55% 80% at 5% 0%,rgba(34,211,238,.2),transparent 60%),var(--bg)}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(34,211,238,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(34,211,238,.07) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(70% 70% at 60% 40%,#000,transparent);mask-image:radial-gradient(70% 70% at 60% 40%,#000,transparent)}
+.hero-in{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:center}
+.eyebrow{display:inline-block;font:700 13px Sora,sans-serif;letter-spacing:.22em;color:var(--cyan);border:1px solid rgba(34,211,238,.4);border-radius:99px;padding:4px 14px;margin-bottom:16px}
+.hero h1{font-size:clamp(30px,5.2vw,54px);line-height:1.22;margin:0 0 16px;font-weight:800}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:#b4c1de;margin:0 0 24px;max-width:50ch;font-size:17px}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+.pts{display:flex;flex-wrap:wrap;gap:8px 18px;list-style:none;margin:0;padding:0;color:var(--mute);font-size:14px}
+.pts li::before{content:"✓";color:var(--ok);margin-right:6px;font-weight:700}
+.hero-art{display:grid;place-items:center}
+.hero-art img{width:min(100%,400px);height:auto;mix-blend-mode:screen;filter:drop-shadow(0 0 46px rgba(34,211,238,.4));animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-12px)}}
+
+/* ໝວດ */
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:-18px;position:relative;z-index:2}
+.cat{background:linear-gradient(180deg,var(--surf2),var(--surf));border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:2px;text-align:left;color:var(--ink);transition:.25s}
+.cat:hover{transform:translateY(-4px);border-color:var(--cyan);box-shadow:0 14px 40px -14px rgba(34,211,238,.5)}
+.cat .ic{width:34px;height:34px;color:var(--cyan);margin-bottom:8px}
+.cat b{font-size:17px}.cat span{color:var(--mute);font-size:13px}
+.ic{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* ຫົວຂໍ້ສ່ວນ */
+.sec-h{margin:56px 0 18px}
+.sec-h h2::after{content:"";display:block;width:56px;height:4px;border-radius:4px;background:var(--grad);margin-top:8px}
+.sec-h p{margin:8px 0 0}
+
+/* ເຄື່ອງມືກອງ */
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:18px}
+.chips,.tsel{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surf);color:var(--ink);border-radius:99px;padding:7px 17px;font-size:15px;transition:.2s}
+.chip:hover{border-color:var(--cyan)}
+.chip[aria-pressed="true"]{background:var(--grad);color:#04141a;border-color:transparent;font-weight:700}
+select{height:40px;border:1px solid var(--line);border-radius:10px;background:var(--surf);color:var(--ink);padding:0 12px;font:inherit}
+
+/* ບັດສິນຄ້າ */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.card{position:relative;background:linear-gradient(180deg,var(--surf2),var(--surf));border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:.25s;animation:pop .45s both}
+@keyframes pop{from{opacity:0;transform:translateY(10px)}}
+.card:hover{transform:translateY(-5px);border-color:rgba(34,211,238,.6);box-shadow:0 18px 44px -16px rgba(168,85,247,.55)}
+.rb{position:absolute;top:12px;left:12px;z-index:2;border-radius:8px;padding:2px 10px;font-size:13px;font-weight:800;font-family:Sora,"Noto Sans Lao",sans-serif}
+.rb.hot{background:var(--hot);color:#fff}.rb.warn{background:var(--warn);color:#2a1d00}.rb.out{background:#475569;color:#fff}
+.pic{height:178px;width:100%;border:0;padding:12px;display:block;cursor:pointer;background:radial-gradient(circle at 50% 35%,rgba(34,211,238,.2),transparent 62%),#0a1324}
+.pic svg,.big svg{width:100%;height:100%;display:block}
+.pic:hover svg{transform:scale(1.05);transition:transform .25s}
+.pic img{width:100%;height:100%;object-fit:cover;display:block;border-radius:10px}
+.a1{fill:#34446b}.a2{fill:#22d3ee;fill-opacity:.85}.a4{fill:#1d2b47}.a5{fill:#ffc83d}.a6{fill:#fff;opacity:.35}
+.body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.brand{color:var(--mute);font-size:13px}
+.card h3{margin:0;font-size:17px;line-height:1.4}
+.card h3 a{text-decoration:none}.card h3 a:hover{color:var(--cyan)}
+.specs{margin:0;padding:0;list-style:none;font-size:14px;color:var(--mute);border-top:1px dashed var(--line)}
+.specs li{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px dashed var(--line)}
+.specs b{color:var(--ink);font-weight:600;text-align:right}
+.foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding-top:6px}
+.price{font-size:20px;white-space:nowrap;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.old{color:var(--mute);font-size:14px;margin-left:6px}
+.offtag{background:var(--hot);color:#fff;border-radius:6px;padding:0 7px;font-size:13px;font-weight:700;margin-left:4px}
+.add{background:var(--grad);color:#04141a;border:0;border-radius:10px;padding:9px 16px;font-weight:700;transition:.2s}
+.add:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.more{background:none;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:8px;font-size:14px;transition:.2s}
+.more:hover{border-color:var(--cyan)}
+.stock{font-size:13px;color:var(--ok)}.stock.low{color:var(--warn)}
+.empty{padding:34px;text-align:center;color:var(--mute);background:var(--surf);border:1px dashed var(--line);border-radius:16px;grid-column:1/-1}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:1px 10px;font-size:13px;margin:2px 6px 2px 0}
+.tag.ok{color:var(--ok);border-color:var(--ok)}.tag.warn{color:var(--warn);border-color:currentColor}
+
+/* ເປັນຫຍັງ / ຂັ້ນຕອນ / FAQ / CTA */
+.why-g{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.wc{background:linear-gradient(180deg,var(--surf2),var(--surf));border:1px solid var(--line);border-radius:18px;padding:20px}
+.wc .ic{width:34px;height:34px;color:var(--violet)}
+.wc h3{margin:10px 0 6px;font-size:17px}.wc p{margin:0;color:var(--mute);font-size:15px}
+.st-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;list-style:none;margin:0;padding:0}
+.st-g li{background:var(--surf);border:1px solid var(--line);border-radius:18px;padding:20px}
+.st-g .n{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--grad);color:#04141a;margin-bottom:10px}
+.st-g p{margin:4px 0 0;color:var(--mute);font-size:15px}
+.faq details{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:4px 18px;margin-bottom:10px}
+.faq summary{cursor:pointer;font-weight:600;padding:12px 0;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.faq summary::after{content:"+";color:var(--cyan);font-size:22px;line-height:1}
+.faq details[open] summary::after{content:"–"}
+.faq details p{margin:0 0 14px;color:var(--mute)}
+.cta2{margin:56px 0 0;border-radius:22px;padding:30px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;background:linear-gradient(135deg,rgba(34,211,238,.16),rgba(168,85,247,.2)),var(--surf);border:1px solid #2b3d62}
+.cta2 h2{font-size:clamp(20px,3vw,26px)}.cta2 p{margin:6px 0 0;color:#b4c1de}
+
+/* footer */
+footer{background:#04070d;border-top:1px solid var(--line);margin-top:64px;padding:40px 0 18px}
+.foot-g{display:grid;grid-template-columns:1.4fr 1fr 1fr .8fr;gap:24px}
+footer h4{margin:0 0 8px;font-size:15px;color:var(--cyan);letter-spacing:.04em}
+footer p{margin:3px 0;font-size:15px;color:#b4c1de}
+footer a{text-decoration:none}footer a:hover{color:var(--cyan)}
+.fb p{color:var(--mute);margin-top:10px}
+.copy{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);color:var(--mute);font-size:14px}
+
+/* ປຸ່ມ WhatsApp ລອຍ */
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 30px -6px rgba(37,211,102,.7)}
+.fab svg{width:28px;height:28px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.fab::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #25d366;animation:ring 2.4s ease-out infinite}
+@keyframes ring{to{transform:scale(1.6);opacity:0}}
+
+/* ໜ້າຕ່າງ (ກະຕ່າ + ລາຍລະອຽດ) */
+dialog{border:1px solid #2b3d62;border-radius:20px;padding:0;width:min(460px,94vw);max-height:90vh;background:var(--surf2);color:var(--ink);margin:auto;box-shadow:0 30px 80px -20px rgba(0,0,0,.8)}
+dialog::backdrop{background:rgba(2,5,12,.72);backdrop-filter:blur(4px)}
+#detail{width:min(580px,94vw)}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
+.dh h2{margin:0;font-size:19px}
+.x{background:none;border:0;color:var(--ink);font-size:26px;line-height:1}
+.big{height:230px;padding:16px;background:radial-gradient(circle at 50% 40%,rgba(34,211,238,.22),transparent 65%),#0a1324}
+.big img{width:100%;height:100%;object-fit:contain;display:block}
+.thumbs{display:flex;gap:8px;padding:10px 18px 0;overflow-x:auto}
+.thumbs button{flex:none;width:58px;height:58px;padding:0;border:2px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surf)}
+.thumbs button[aria-pressed="true"]{border-color:var(--cyan)}
+.thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.dinfo{padding:16px 18px 20px;overflow:auto;max-height:50vh}
+.dinfo h3{margin:0 0 4px;font-size:22px}
+.dinfo p{color:var(--mute);margin:8px 0 12px}
+.dinfo h4{margin:14px 0 4px;font-size:15px;color:var(--cyan)}
+.dinfo ul.inc{margin:0;padding-left:20px;font-size:15px}
+.tags{margin:6px 0 2px}.desc{white-space:pre-line}
+.dact{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:16px}
+.dact2{display:flex;gap:8px;margin-top:12px}.dact2 .more{flex:1;text-align:center;padding:10px;font-size:15px;color:var(--ink)}
+.dact2 a.more{display:block;text-decoration:none}
+.qsel{display:flex;align-items:center;gap:8px}.qsel .more{width:36px;padding:4px}
+.rel{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.relc{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:6px;display:grid;gap:4px;text-align:left;color:var(--ink);font-size:13px;cursor:pointer;transition:.2s}
+.relc:hover{border-color:var(--cyan)}
+.relc svg,.relc img{width:100%;height:70px;object-fit:cover;display:block}
+.relc span{overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.items{padding:6px 18px;max-height:44vh;overflow:auto}
+.row{display:grid;grid-template-columns:1fr auto;gap:4px 10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:30px;height:30px;border:1px solid var(--line);background:var(--surf);color:var(--ink);border-radius:8px}
+.sum{padding:14px 18px;border-top:1px solid var(--line)}
+.tot{display:flex;justify-content:space-between;font-size:18px;margin-bottom:10px}
+.sum input{width:100%;height:42px;border:1px solid var(--line);border-radius:10px;padding:0 12px;background:var(--surf);color:var(--ink);font:inherit;margin-bottom:8px}
+.sum input:focus{border-color:var(--cyan);outline:none}
+.sum .btn{width:100%}
+.note{font-size:13px;color:var(--mute);margin:8px 0 0}
+.payinfo{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:14px;margin-bottom:8px}
+.payinfo summary{cursor:pointer;font-weight:600}#payinfo-body{white-space:pre-line;margin-top:6px;color:var(--mute)}
+
+/* SweetAlert */
+.swal2-popup{font-family:"Noto Sans Lao",system-ui,sans-serif;border-radius:20px;border:1px solid #2b3d62}
+.swal2-title{font-size:1.3rem}.swal2-container{z-index:2000}
+
+/* ເລື່ອນເຫັນແລ້ວຄ່ອຍປາກົດ */
+.js .rv{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
+.js .rv.in{opacity:1;transform:none}
+
+@media (max-width:900px){
+  .hero-in{grid-template-columns:1fr}.hero-art{order:-1}.hero-art img{width:min(60%,250px)}
+  .cats{grid-template-columns:1fr 1fr;margin-top:18px}.why-g{grid-template-columns:1fr 1fr}.st-g{grid-template-columns:1fr}
+  .foot-g{grid-template-columns:1fr 1fr}
+}
+@media (max-width:520px){
+  .logo{font-size:17px}.cartbtn{padding:0 12px}.hero{padding-top:28px}.why-g{grid-template-columns:1fr}.foot-g{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}.hero-art img,.card,.fab::after{animation:none}.js .rv{opacity:1;transform:none;transition:none}
+}

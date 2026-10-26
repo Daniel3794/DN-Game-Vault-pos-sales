@@ -9,7 +9,11 @@ function fmt(n){return n.toLocaleString("en-US")+" ₭"}
 function ribbon(p){if(p.s<1)return '<span class="rb out">ໝົດ</span>';if(p.old>p.p)return '<span class="rb hot">-'+Math.round((1-p.p/p.old)*100)+'%</span>';if(p.s<5)return '<span class="rb warn">ເຫຼືອ '+p.s+'</span>';return ""}
 function brands(){var s=document.getElementById("brand"),cur=bf,b=[];P.forEach(function(p){if(b.indexOf(p.b)<0)b.push(p.b)});b.sort();s.innerHTML='<option value="">ທຸກຍີ່ຫໍ້</option>'+b.map(function(x){return '<option value="'+E(x)+'">'+E(x)+'</option>'}).join("");s.value=b.indexOf(cur)>-1?cur:"";bf=s.value}
 function inRange(v){if(!pf)return true;var a=pf.split("-"),lo=+a[0]||0,hi=a[1]?+a[1]:Infinity;return v>=lo&&v<hi}
-function priceHtml(p){return '<span class="price num">'+fmt(p.p)+'</span>'+(p.old>p.p?'<s class="old">'+fmt(p.old)+'</s><span class="offtag">-'+Math.round((1-p.p/p.old)*100)+'%</span>':"")}
+function ck(k){var a=String(k).split(":");return{p:P.find(function(x){return x.id==a[0]}),vi:a[1]===undefined?-1:+a[1]}}
+function unit(k){var o=ck(k),p=o.p;if(!p)return null;var v=o.vi>=0?p.v[o.vi]:null;if(o.vi>=0&&!v)return null;return{p:p,v:v,name:p.n+(v?" ("+v.n+")":""),price:v?v.p:p.p,stock:v?v.s:p.s}}
+function vp(p,i){return{p:p.v[i].p,old:0}}
+function vblock(p,sel){return p.v&&p.v.length?'<h4>ເລືອກແບບ</h4><div class="vopts" role="group" aria-label="ເລືອກແບບ">'+p.v.map(function(v,i){return '<button type="button" class="vopt" data-vi="'+i+'" aria-pressed="'+(i===sel)+'"'+(v.s<1?' disabled':'')+'><span>'+E(v.n)+'</span><b class="num">'+fmt(v.p)+'</b>'+(v.s<1?'<i>ໝົດ</i>':v.s<5?'<i class="w">ເກືອບໝົດ</i>':'')+'</button>'}).join("")+'</div>':""}
+function priceHtml(p){return (p.vr?'<small class="from">ເລີ່ມ</small> ':"")+'<span class="price num">'+fmt(p.p)+'</span>'+(p.old>p.p?'<s class="old">'+fmt(p.old)+'</s><span class="offtag">-'+Math.round((1-p.p/p.old)*100)+'%</span>':"")}
 function relBlock(p){var l=P.filter(function(x){return x.c===p.c&&x.id!==p.id}).slice(0,3);return l.length?'<h4>ສິນຄ້າທີ່ຄ້າຍກັນ</h4><div class="rel">'+l.map(function(x){return '<button type="button" class="relc" data-rel="'+x.id+'">'+pic(x)+'<span>'+E(x.n)+'</span><b class="num">'+fmt(x.p)+'</b></button>'}).join("")+'</div>':""}
 function chips(){brands();var el=document.getElementById("chips");el.innerHTML="";CATS.forEach(function(c){var b=document.createElement("button");b.className="chip";b.textContent=c;b.setAttribute("aria-pressed",c===cat);b.onclick=function(){cat=c;chips();draw()};el.appendChild(b)})}
 function draw(){
@@ -18,17 +22,17 @@ function draw(){
   var g=document.getElementById("grid");
   if(!P.length){g.innerHTML='<div class="empty">ຍັງບໍ່ມີສິນຄ້າ. ກັບມາເບິ່ງໃໝ່ໄວໆນີ້ເດີ.</div>';return}
   if(!l.length){g.innerHTML='<div class="empty">ບໍ່ພົບສິນຄ້າທີ່ຄົ້ນຫາ. ລອງຄຳອື່ນ ຫຼື ເລືອກ “ທັງໝົດ”.</div>';return}
-  g.innerHTML=l.map(function(p){return '<article class="card">'+ribbon(p)+'<button class="pic" data-open="'+p.id+'" aria-label="ເບິ່ງລາຍລະອຽດ '+p.n+'">'+pic(p)+'</button><div class="body"><span class="brand">'+p.b+' · '+p.c+'</span>'+condBadge(p)+'<h3><a href="#" data-open="'+p.id+'">'+p.n+'</a></h3><div class="foot"><span>'+priceHtml(p)+'</span><button class="add" data-id="'+p.id+'">ໃສ່ກະຕ່າ</button></div><button class="more" data-open="'+p.id+'">ເບິ່ງສະເປັກ ແລະ ລາຍລະອຽດ</button><span class="stock'+(p.s<5?' low':'')+'">'+(p.s<5?'ເຫຼືອ '+p.s+' ຊິ້ນ':'ມີສິນຄ້າ')+'</span></div></article>'}).join("");
+  g.innerHTML=l.map(function(p){return '<article class="card">'+ribbon(p)+'<button class="pic" data-open="'+p.id+'" aria-label="ເບິ່ງລາຍລະອຽດ '+p.n+'">'+pic(p)+'</button><div class="body"><span class="brand">'+p.b+' · '+p.c+'</span>'+condBadge(p)+'<h3><a href="#" data-open="'+p.id+'">'+p.n+'</a></h3><div class="foot"><span>'+priceHtml(p)+'</span><button class="add" data-id="'+p.id+'">'+(p.v.length?'ເລືອກແບບ':'ໃສ່ກະຕ່າ')+'</button></div><button class="more" data-open="'+p.id+'">ເບິ່ງສະເປັກ ແລະ ລາຍລະອຽດ</button><span class="stock'+(p.s<5?' low':'')+'">'+(p.s<5?'ເຫຼືອ '+p.s+' ຊິ້ນ':'ມີສິນຄ້າ')+'</span></div></article>'}).join("");
 }
-function upd(){saveCart();
+function upd(){
   var ids=Object.keys(cart),n=0,t=0,h="";
-  ids.forEach(function(id){var p=P.find(function(x){return x.id==id}),q=cart[id];if(!p)return;n+=q;t+=p.p*q;
-    h+='<div class="row"><div>'+p.n+'<br><small class="num">'+fmt(p.p)+'</small></div><div class="qty"><button data-d="-1" data-id="'+id+'" aria-label="ຫຼຸດ">−</button><b>'+q+'</b><button data-d="1" data-id="'+id+'" aria-label="ເພີ່ມ">+</button></div></div>'});
+  ids.forEach(function(id){var u=unit(id),q=cart[id];if(!u){delete cart[id];return}n+=q;t+=u.price*q;
+    h+='<div class="row"><div>'+E(u.name)+'<br><small class="num">'+fmt(u.price)+'</small></div><div class="qty"><button data-d="-1" data-id="'+id+'" aria-label="ຫຼຸດ">−</button><b>'+q+'</b><button data-d="1" data-id="'+id+'" aria-label="ເພີ່ມ">+</button></div></div>'});
   document.getElementById("items").innerHTML=h||'<div class="empty" style="margin:12px 0">ກະຕ່າຍັງຫວ່າງ. ເລືອກສິນຄ້າແລ້ວກົດ “ໃສ່ກະຕ່າ”.</div>';
-  document.getElementById("cnt").textContent=n;document.getElementById("total").textContent=fmt(t);
+  document.getElementById("cnt").textContent=n;document.getElementById("total").textContent=fmt(t);saveCart();
 }
-function change(id,d){var p=P.find(function(x){return x.id==id});cart[id]=Math.min((cart[id]||0)+d,p.s);if(cart[id]<=0)delete cart[id];upd()}
-document.getElementById("grid").onclick=function(e){var o=e.target.closest("[data-open]");if(o){e.preventDefault();openD(+o.dataset.open);return}var b=e.target.closest(".add");if(b){change(b.dataset.id,1);var c=document.getElementById("openCart");c.animate([{transform:"scale(1.08)"},{transform:"scale(1)"}],{duration:200})}};
+function change(id,d){var u=unit(id);if(!u)return;cart[id]=Math.min((cart[id]||0)+d,u.stock);if(cart[id]<=0)delete cart[id];upd()}
+document.getElementById("grid").onclick=function(e){var o=e.target.closest("[data-open]");if(o){e.preventDefault();openD(+o.dataset.open);return}var b=e.target.closest(".add");if(b){var pp=P.find(function(x){return x.id==b.dataset.id});if(pp&&pp.v.length){openD(pp.id);return}change(b.dataset.id,1);var c=document.getElementById("openCart");c.animate([{transform:"scale(1.08)"},{transform:"scale(1)"}],{duration:200})}};
 document.getElementById("items").onclick=function(e){var b=e.target.closest("button[data-d]");if(b)change(b.dataset.id,+b.dataset.d)};
 document.getElementById("q").oninput=function(e){term=e.target.value.toLowerCase().trim();draw()};
 document.getElementById("sort").onchange=function(e){order=e.target.value;draw()};
@@ -55,11 +59,11 @@ document.getElementById("order").onclick=async function(e){
   if(!nm||ph.replace(/\D/g,"").length<8){sw({icon:"warning",title:"ກະລຸນາໃສ່ຊື່ ແລະ ເບີໂທໃຫ້ຄົບ"}).then(function(){document.getElementById(nm?"phone":"name").focus()});return}
   var method=pm();
   var t=0,m="ສະບາຍດີ, ຂໍສັ່ງຊື້:\n";
-  ids.forEach(function(id){var p=P.find(function(x){return x.id==id});t+=p.p*cart[id];m+="- "+p.b+" "+p.n+" x"+cart[id]+" = "+fmt(p.p*cart[id])+"\n"});
+  ids.forEach(function(id){var u=unit(id);t+=u.price*cart[id];m+="- "+u.p.b+" "+u.name+" x"+cart[id]+" = "+fmt(u.price*cart[id])+"\n"});
   m+="ລວມ: "+fmt(t)+"\nຊື່: "+nm+"\nເບີ: "+ph+"\nທີ່ຢູ່: "+(ad||"ມາຮັບທີ່ຮ້ານ"); 
   if(method==="transfer"){var pr=await payStep(t);if(!pr.isConfirmed)return}
   m+="\nຊຳລະ: "+(method==="transfer"?(slipData?"ໂອນຜ່ານ QR (ແນບສະລິບແລ້ວ)":"ໂອນຜ່ານ QR (ຈະສົ່ງສະລິບທາງ WhatsApp)"):"ຈ່າຍເງິນສົດ");
-  if(window.saveOrder){try{await window.saveOrder({name:nm,phone:ph,address:ad||"ມາຮັບທີ່ຮ້ານ",total:t,payMethod:method,slip:slipData||null,items:ids.map(function(id){var p=P.find(function(x){return x.id==id});return{id:p.id,pid:p.doc||null,name:p.n,qty:cart[id],price:p.p}})});cart={};slipData=null;upd();}catch(err){sw({icon:"error",title:"ສັ່ງຊື້ບໍ່ສຳເລັດ",text:err.message||"ລອງໃໝ່ອີກຄັ້ງ"});return}}
+  if(window.saveOrder){try{await window.saveOrder({name:nm,phone:ph,address:ad||"ມາຮັບທີ່ຮ້ານ",total:t,payMethod:method,slip:slipData||null,items:ids.map(function(id){var u=unit(id);return{id:u.p.id,pid:u.p.doc||null,vi:u.v?+String(id).split(":")[1]:null,name:u.name,qty:cart[id],price:u.price}})});cart={};slipData=null;upd();}catch(err){sw({icon:"error",title:"ສັ່ງຊື້ບໍ່ສຳເລັດ",text:err.message||"ລອງໃໝ່ອີກຄັ້ງ"});return}}
   await sw({icon:"success",title:"ຮັບອໍເດີແລ້ວ",text:"ກຳລັງເປີດ WhatsApp ເພື່ອຢືນຢັນກັບຮ້ານ...",timer:1800,timerProgressBar:true,showConfirmButton:false});
   location.href="https://wa.me/"+SHOP_WA+"?text="+encodeURIComponent(m);
 };
@@ -97,13 +101,22 @@ var DESC={"ແລັບທ໋ອບ":"ເຄື່ອງພົກພາ ເໝ�
 var INC={"ແລັບທ໋ອບ":["ເຄື່ອງ + ສາຍສາກ + ໃບຮັບປະກັນ","ລົງ Windows ແລະ ໂປຣແກຣມພື້ນຖານຟຣີ","ກະເປົ໋າ ຫຼື ເມົ້າ ຕາມໂປຣໂມຊັນ"],"ຄອມຕັ້ງໂຕະ":["ປະກອບ + ທົດສອບຟຣີ","ລົງ Windows ແລະ ໂປຣແກຣມຟຣີ","ຮັບປະກັນຊິ້ນສ່ວນ 1–3 ປີ"],"ຊິ້ນສ່ວນ":["ຕິດຕັ້ງໃຫ້ຟຣີທີ່ຮ້ານ","ໃບຮັບປະກັນຜູ້ຜະລິດ"],"ອຸປະກອນເສີມ":["ໃບຮັບປະກັນ 1 ປີ","ເຊັກສິນຄ້າກ່ອນຮັບ"]};
 var dlgD=document.getElementById("detail");
 function openD(id){
-  var p=P.find(function(x){return x.id===id});
-  document.getElementById("dbody").innerHTML='<div class="big" id="bigpic">'+pic(p)+'</div>'+thumbs(p)+'<div class="dinfo"><span class="brand">'+p.b+' · '+p.c+'</span><h3>'+p.n+'</h3><div class="tags">'+tagHtml(p)+'</div><span class="stock'+(p.s<5?' low':'')+'">'+(p.s<5?'ເຫຼືອ '+p.s+' ຊິ້ນ':'ມີສິນຄ້າ')+'</span><p class="desc">'+(p.desc?E(p.desc):DESC[p.c])+'</p><h4>ສະເປັກ</h4><ul class="specs">'+p.sp.map(function(s){return '<li><span>'+s[0]+'</span><b>'+s[1]+'</b></li>'}).join("")+'</ul><h4>ລວມຢູ່ໃນລາຄາ</h4><ul class="inc">'+INC[p.c].map(function(t){return '<li>'+t+'</li>'}).join("")+'</ul><div class="dact"><span>'+priceHtml(p)+'</span><div class="qsel"><button type="button" class="more" id="qm" aria-label="ຫຼຸດ">−</button><b id="qv" class="num">1</b><button type="button" class="more" id="qp" aria-label="ເພີ່ມ">+</button></div><button class="add" id="addD">ໃສ່ກະຕ່າ</button></div><div class="dact2"><a class="more" id="askD" target="_blank" rel="noopener" href="'+askUrl(p)+'">ສອບຖາມຜ່ານ WhatsApp</a><button class="more" id="shareD" type="button">ແຊຣ໌ລິ້ງສິນຄ້າ</button></div>'+relBlock(p)+'</div>';
+  var p=P.find(function(x){return x.id===id}),vs=p.v||[],sel=Math.max(0,vs.findIndex(function(v){return v.s>0}));
+  document.getElementById("dbody").innerHTML='<div class="big" id="bigpic">'+pic(p)+'</div>'+thumbs(p)+'<div class="dinfo"><span class="brand">'+p.b+' · '+p.c+'</span><h3>'+p.n+'</h3><div class="tags">'+tagHtml(p)+'</div>'+vblock(p,sel)+'<span id="dstock" class="stock"></span><p class="desc">'+(p.desc?E(p.desc):DESC[p.c])+'</p><h4>ສະເປັກ</h4><ul class="specs">'+p.sp.map(function(s){return '<li><span>'+s[0]+'</span><b>'+s[1]+'</b></li>'}).join("")+'</ul><h4>ລວມຢູ່ໃນລາຄາ</h4><ul class="inc">'+INC[p.c].map(function(t){return '<li>'+t+'</li>'}).join("")+'</ul><div class="dact"><span id="dprice">'+priceHtml(vs.length?vp(p,sel):p)+'</span><div class="qsel"><button type="button" class="more" id="qm" aria-label="ຫຼຸດ">−</button><b id="qv" class="num">1</b><button type="button" class="more" id="qp" aria-label="ເພີ່ມ">+</button></div><button class="add" id="addD">ໃສ່ກະຕ່າ</button></div><div class="dact2"><a class="more" id="askD" target="_blank" rel="noopener" href="'+askUrl(p)+'">ສອບຖາມຜ່ານ WhatsApp</a><button class="more" id="shareD" type="button">ແຊຣ໌ລິ້ງສິນຄ້າ</button></div>'+relBlock(p)+'</div>';
   try{history.replaceState(null,"","#p="+id)}catch(e){}
-  var q=1,qv=document.getElementById("qv");
-  document.getElementById("qm").onclick=function(){if(q>1)qv.textContent=--q};
-  document.getElementById("qp").onclick=function(){if(q<Math.max(1,p.s))qv.textContent=++q};
-  document.getElementById("addD").onclick=function(){change(id,q);this.textContent="ເພີ່ມ "+q+" ຊິ້ນແລ້ວ ✓"};
+  var q=1,qv=document.getElementById("qv"),cs=function(){return vs.length?vs[sel].s:p.s};
+  function refresh(){
+    document.querySelectorAll(".vopt").forEach(function(x){x.setAttribute("aria-pressed",+x.dataset.vi===sel)});
+    if(vs.length){document.getElementById("dprice").innerHTML=priceHtml(vp(p,sel));var vi=vs[sel].img;document.getElementById("bigpic").innerHTML=vi?'<img src="'+E(vi)+'" alt="'+E(p.n)+'">':pic(p);document.querySelectorAll(".thumbs button").forEach(function(b){b.setAttribute("aria-pressed",vi?p.img[+b.dataset.i]===vi:+b.dataset.i===0)})}
+    var s=cs(),st=document.getElementById("dstock"),a=document.getElementById("addD");
+    st.className="stock"+(s<5?" low":"");st.textContent=s<1?"ໝົດ":s<5?"ເຫຼືອ "+s+" ຊິ້ນ":"ມີສິນຄ້າ";
+    a.disabled=s<1;a.textContent="ໃສ່ກະຕ່າ";qv.textContent=q;
+  }
+  document.querySelectorAll(".vopt").forEach(function(b){b.onclick=function(){sel=+b.dataset.vi;q=1;refresh()}});
+  document.getElementById("qm").onclick=function(){if(q>1){q--;qv.textContent=q}};
+  document.getElementById("qp").onclick=function(){if(q<Math.max(1,cs())){q++;qv.textContent=q}};
+  document.getElementById("addD").onclick=function(){change(vs.length?id+":"+sel:id,q);this.textContent="ເພີ່ມ "+q+" ຊິ້ນແລ້ວ ✓"};
+  refresh();
   document.querySelectorAll(".relc").forEach(function(b){b.onclick=function(){openD(+b.dataset.rel)}});
   document.getElementById("shareD").onclick=function(){var u=shareUrl(p);
     var done=function(){Swal.fire({toast:true,position:"top",icon:"success",title:"ກ໊ອບລິ້ງແລ້ວ",showConfirmButton:false,timer:1800,target:dlgD,background:"var(--surf)",color:"var(--ink)"})};

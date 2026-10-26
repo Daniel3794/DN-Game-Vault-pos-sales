@@ -45,7 +45,7 @@
         </div>
         <ul class="pts"><li>ໃບຮັບປະກັນທຸກຊິ້ນ</li><li>ກວດສະເປັກກ່ອນສົ່ງ</li><li>ບັນທຶກ Serial ທຸກເຄື່ອງ</li></ul>
       </div>
-      <div class="hero-art"><img src="assets/img/hero-shield.webp" alt="ໂລໂກ້ DN Game Vault" width="440" height="440"></div>
+      <div class="hero-art"><img src="assets/img/hero-logo.webp" alt="ໂລໂກ້ DN Game Vault" width="440" height="440"></div>
     </div>
   </section>
 
@@ -126,6 +126,14 @@
   <div class="sum">
     <div class="tot"><span>ລວມ</span><b class="num" id="total">0 ₭</b></div>
     <details class="payinfo" id="payinfo" hidden><summary>ຊຳລະເງິນ ແລະ ການຈັດສົ່ງ</summary><div id="payinfo-body"></div></details>
+    <div class="paybox">
+      <b>ວິທີຊຳລະ</b>
+      <div class="paychoice" role="radiogroup" aria-label="ວິທີຊຳລະ">
+        <label><input type="radio" name="pm" value="transfer" checked> ໂອນຜ່ານ QR</label>
+        <label><input type="radio" name="pm" value="cash"> ຈ່າຍເງິນສົດ (ຕອນຮັບເຄື່ອງ / ທີ່ຮ້ານ)</label>
+      </div>
+      <p class="note" id="payhint">ເລືອກ “ໂອນຜ່ານ QR” ແລ້ວກົດສັ່ງຊື້ ລະບົບຈະສະແດງ QR ໃຫ້ສະແກນໃນຂັ້ນຕອນຕໍ່ໄປ.</p>
+    </div>
     <input id="name" placeholder="ຊື່ລູກຄ້າ" aria-label="ຊື່ລູກຄ້າ" autocomplete="name">
     <input id="phone" type="tel" inputmode="tel" placeholder="ເບີໂທ / WhatsApp" aria-label="ເບີໂທ" autocomplete="tel">
     <input id="addr" placeholder="ທີ່ຢູ່ຈັດສົ່ງ ຫຼື ມາຮັບທີ່ຮ້ານ" aria-label="ທີ່ຢູ່ຈັດສົ່ງ">

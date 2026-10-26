@@ -39,7 +39,10 @@ if (configured) {
         if (left < 0) throw new Error(o.items[k].name + " ເຫຼືອບໍ່ພໍ");
         tx.update(refs[k], { stock: left });
       });
-      tx.set(doc(collection(db, "orders")), clean(Object.assign({}, o, { status: "new", createdAt: serverTimestamp() })));
+      const oref = doc(collection(db, "orders")), slip = o.slip, rest = Object.assign({}, o);
+      delete rest.slip;
+      tx.set(oref, clean(Object.assign({}, rest, { status: "new", paid: false, hasSlip: !!slip, createdAt: serverTimestamp() })));
+      if (slip) tx.set(doc(db, "slips", oref.id), { img: slip, createdAt: serverTimestamp() }); // ສະລິບເກັບແຍກ ໃຫ້ສະເພາະ admin ອ່ານໄດ້
     });
   };
 }

@@ -13,12 +13,12 @@ if (configured) {
       const vs = (Array.isArray(x.variants) ? x.variants : []).map(function (v) { return { n: String(v.name || ""), p: Number(v.price) || 0, s: Number(v.stock) || 0, img: v.image || (Number.isInteger(v.imageIndex) && Array.isArray(x.images) && x.images[v.imageIndex]) || "" }; }).filter(function (v) { return v.n; });
       const vmin = vs.length ? Math.min.apply(null, vs.map(function (v) { return v.p; })) : 0, vmax = vs.length ? Math.max.apply(null, vs.map(function (v) { return v.p; })) : 0;
       K[id] = x.type || "l";
-      P.push({ id: id, doc: d.id, c: x.category, b: x.brand, n: x.name, p: vs.length ? vmin : Number(x.price), s: vs.length ? vs.reduce(function (a, v) { return a + v.s; }, 0) : Number(x.stock), v: vs, vr: vmin !== vmax,
+      P.push({ id: id, doc: d.id, c: x.category, b: x.brand, n: x.name, p: vs.length ? vmin : Number(x.price), s: vs.length ? vs.reduce(function (a, v) { return a + v.s; }, 0) : Number(x.stock), v: vs, vr: vmin !== vmax, pre: !!x.preorder, eta: x.preorderEta || "",
                old: Number(x.oldPrice) || 0, img: x.images || [], desc: x.description || "", war: x.warranty || "", cond: x.condition || "new", sp: (x.specs || []).map(function (s) { return [s.k, s.v]; }) });
     });
     Object.keys(cart).forEach(function (k) {
       const u = unit(k);
-      if (!u || u.stock < 1) delete cart[k]; else if (cart[k] > u.stock) cart[k] = u.stock;
+      if (!u || u.max < 1) delete cart[k]; else if (cart[k] > u.max) cart[k] = u.max;
     });
     chips(); draw(); upd();
     if (!window._hashDone) { window._hashDone = true; openFromHash(); }
@@ -33,6 +33,7 @@ if (configured) {
       // ລວມລາຍການຂອງສິນຄ້າດຽວກັນ (ຫຼາຍແບບ) ເຂົ້າເອກະສານດຽວ ເພື່ອຫັກສະຕັອກຄັ້ງດຽວ
       const groups = {};
       o.items.forEach(function (i) {
+        if (i.pre) return; // ສັ່ງຈອງ: ບໍ່ຫັກສະຕັອກ
         const p = P.find(function (x) { return x.id == i.id; });
         if (!p || !p.doc) throw new Error("ບໍ່ພົບສິນຄ້າໃນລະບົບ");
         (groups[p.doc] = groups[p.doc] || { ref: doc(db, "products", p.doc), items: [] }).items.push(i);

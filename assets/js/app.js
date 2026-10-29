@@ -1,6 +1,10 @@
 document.documentElement.classList.add("js");
 var SHOP_WA="8562054800302"; // ປ່ຽນເປັນເບີ WhatsApp ຂອງຮ້ານ (ລະຫັດປະເທດ ບໍ່ມີ +)
-var CATS=["ທັງໝົດ","ແລັບທ໋ອບ","ຄອມຕັ້ງໂຕະ","ຊິ້ນສ່ວນ","ອຸປະກອນເສີມ"];
+var CATS=["ທັງໝົດ","ຈັດເຊັດ ຄອມພິວເຕີ (Desktop)","ໂນ໊ດບຸ໊ກ (Laptop)","ກາດຈໍ (GPU)","ເກມມິ່ງເກຍ (Gaming Gear)","ໜ້າຈໍຄອມ (Monitor)","ອຸປະກອນເສີມ (Accessories)"];
+var CI={"ຈັດເຊັດ ຄອມພິວເຕີ (Desktop)": "🖥️", "ໂນ໊ດບຸ໊ກ (Laptop)": "💻", "ກາດຈໍ (GPU)": "🧩", "ເກມມິ່ງເກຍ (Gaming Gear)": "⌨️", "ໜ້າຈໍຄອມ (Monitor)": "📺", "ອຸປະກອນເສີມ (Accessories)": "🖱️"};
+// ຊື່ໝວດເກົ່າໃນຖານຂໍ້ມູນ → ໝວດໃໝ່
+var LEG={"ແລັບທ໋ອບ": "ໂນ໊ດບຸ໊ກ (Laptop)", "ຄອມຕັ້ງໂຕະ": "ຈັດເຊັດ ຄອມພິວເຕີ (Desktop)", "ຊິ້ນສ່ວນ": "ອຸປະກອນເສີມ (Accessories)"};
+function normCat(c){return LEG[c]||c}
 var P=[];
 function loadCart(){var c={};try{var r=JSON.parse(localStorage.getItem("cart_v1")||"{}");Object.keys(r).forEach(function(k){var q=parseInt(r[k],10);if(q>0)c[k]=q})}catch(e){}return c}
 function saveCart(){try{localStorage.setItem("cart_v1",JSON.stringify(cart))}catch(e){}}
@@ -15,7 +19,7 @@ function vp(p,i){return{p:p.v[i].p,old:0}}
 function vblock(p,sel){return p.v&&p.v.length?'<h4>ເລືອກແບບ</h4><div class="vopts" role="group" aria-label="ເລືອກແບບ">'+p.v.map(function(v,i){return '<button type="button" class="vopt" data-vi="'+i+'" aria-pressed="'+(i===sel)+'"'+(v.s<1&&!p.pre?' disabled':'')+'><span>'+E(v.n)+'</span><b class="num">'+fmt(v.p)+'</b>'+(v.s<1?(p.pre?'<i class="w">ສັ່ງຈອງ</i>':'<i>ໝົດ</i>'):v.s<5?'<i class="w">ເກືອບໝົດ</i>':'')+'</button>'}).join("")+'</div>':""}
 function priceHtml(p){return (p.vr?'<small class="from">ເລີ່ມ</small> ':"")+'<span class="price num">'+fmt(p.p)+'</span>'+(p.old>p.p?'<s class="old">'+fmt(p.old)+'</s><span class="offtag">-'+Math.round((1-p.p/p.old)*100)+'%</span>':"")}
 function relBlock(p){var l=P.filter(function(x){return x.c===p.c&&x.id!==p.id}).slice(0,3);return l.length?'<h4>ສິນຄ້າທີ່ຄ້າຍກັນ</h4><div class="rel">'+l.map(function(x){return '<button type="button" class="relc" data-rel="'+x.id+'">'+pic(x)+'<span>'+E(x.n)+'</span><b class="num">'+fmt(x.p)+'</b></button>'}).join("")+'</div>':""}
-function chips(){brands();var el=document.getElementById("chips");el.innerHTML="";CATS.forEach(function(c){var b=document.createElement("button");b.className="chip";b.textContent=c;b.setAttribute("aria-pressed",c===cat);b.onclick=function(){cat=c;chips();draw()};el.appendChild(b)})}
+function chips(){brands();var el=document.getElementById("chips");el.innerHTML="";CATS.forEach(function(c){var b=document.createElement("button");b.className="chip";b.textContent=(CI[c]?CI[c]+" ":"")+c;b.setAttribute("aria-pressed",c===cat);b.onclick=function(){cat=c;chips();draw()};el.appendChild(b)})}
 function draw(){
   var l=P.filter(function(p){return(cat==="ທັງໝົດ"||p.c===cat)&&(!bf||p.b===bf)&&inRange(p.p)&&(p.b+" "+p.n+" "+p.c).toLowerCase().indexOf(term)>-1});
   if(order==="asc")l.sort(function(a,b){return a.p-b.p});if(order==="desc")l.sort(function(a,b){return b.p-a.p});
@@ -97,12 +101,12 @@ function condBadge(p){return p.cond&&p.cond!=="new"?' <span class="tag warn">'+E
 function tagHtml(p){return '<span class="tag">'+E(COND[p.cond||"new"]||"ເຄື່ອງໃໝ່")+'</span>'+(p.war?'<span class="tag ok">ຮັບປະກັນ '+E(p.war)+'</span>':"")}
 function shareUrl(p){return location.href.split("#")[0]+"#p="+p.id}
 function askUrl(p){return "https://wa.me/"+SHOP_WA+"?text="+encodeURIComponent("ສະບາຍດີ, ສົນໃຈ "+p.b+" "+p.n+" ("+fmt(p.p)+")\n"+shareUrl(p))}
-var DESC={"ແລັບທ໋ອບ":"ເຄື່ອງພົກພາ ເໝາະກັບການຮຽນ, ເຮັດວຽກ ແລະ ເບິ່ງໜັງ. ທາງຮ້ານເຊັກເຄື່ອງ ແລະ ລົງໂປຣແກຣມໃຫ້ກ່ອນສົ່ງມອບ.","ຄອມຕັ້ງໂຕະ":"ຄອມປະກອບໂດຍຊ່າງຂອງຮ້ານ ທົດສອບແລ້ວ 24 ຊົ່ວໂມງ. ສາມາດອັບເກຣດ RAM, SSD ຫຼື ກາດຈໍພາຍຫຼັງໄດ້.","ຊິ້ນສ່ວນ":"ຊິ້ນສ່ວນສຳລັບອັບເກຣດຄອມ. ບອກຮຸ່ນຄອມຂອງເຈົ້າ ທາງຮ້ານຈະຊ່ວຍກວດວ່າໃຊ້ໄດ້ກັບເຄື່ອງ.","ອຸປະກອນເສີມ":"ອຸປະກອນເສີມທີ່ໃຊ້ໄດ້ກັບຄອມທົ່ວໄປ ເສຽບແລ້ວໃຊ້ໄດ້ທັນທີ."};
-var INC={"ແລັບທ໋ອບ":["ເຄື່ອງ + ສາຍສາກ + ໃບຮັບປະກັນ","ລົງ Windows ແລະ ໂປຣແກຣມພື້ນຖານຟຣີ","ກະເປົ໋າ ຫຼື ເມົ້າ ຕາມໂປຣໂມຊັນ"],"ຄອມຕັ້ງໂຕະ":["ປະກອບ + ທົດສອບຟຣີ","ລົງ Windows ແລະ ໂປຣແກຣມຟຣີ","ຮັບປະກັນຊິ້ນສ່ວນ 1–3 ປີ"],"ຊິ້ນສ່ວນ":["ຕິດຕັ້ງໃຫ້ຟຣີທີ່ຮ້ານ","ໃບຮັບປະກັນຜູ້ຜະລິດ"],"ອຸປະກອນເສີມ":["ໃບຮັບປະກັນ 1 ປີ","ເຊັກສິນຄ້າກ່ອນຮັບ"]};
+var DESC={"ຈັດເຊັດ ຄອມພິວເຕີ (Desktop)": "ຄອມປະກອບໂດຍຊ່າງຂອງຮ້ານ ທົດສອບແລ້ວ 24 ຊົ່ວໂມງ. ສາມາດອັບເກຣດ RAM, SSD ຫຼື ກາດຈໍພາຍຫຼັງໄດ້.", "ໂນ໊ດບຸ໊ກ (Laptop)": "ເຄື່ອງພົກພາ ເໝາະກັບການຮຽນ, ເຮັດວຽກ ແລະ ເບິ່ງໜັງ. ທາງຮ້ານເຊັກເຄື່ອງ ແລະ ລົງໂປຣແກຣມໃຫ້ກ່ອນສົ່ງມອບ.", "ກາດຈໍ (GPU)": "ກາດຈໍສຳລັບຫຼິ້ນເກມ ແລະ ງານກຣາຟິກ. ບອກຮຸ່ນຄອມຂອງເຈົ້າ ທາງຮ້ານຈະຊ່ວຍກວດວ່າໃຊ້ໄດ້ກັບເຄື່ອງ.", "ເກມມິ່ງເກຍ (Gaming Gear)": "ເມົ້າ, ຄີບອດ, ຫູຟັງ ແລະ ອຸປະກອນເກມ ຄັດມາເພື່ອນັກເກມ ເສຽບແລ້ວຫຼິ້ນໄດ້ທັນທີ.", "ໜ້າຈໍຄອມ (Monitor)": "ໜ້າຈໍຄອມສຳລັບເຮັດວຽກ ແລະ ຫຼິ້ນເກມ. ທາງຮ້ານເຊັກສະພາບກ່ອນມອບໃຫ້ລູກຄ້າ.", "ອຸປະກອນເສີມ (Accessories)": "ອຸປະກອນເສີມທີ່ໃຊ້ໄດ້ກັບຄອມທົ່ວໄປ ເສຽບແລ້ວໃຊ້ໄດ້ທັນທີ."};
+var INC={"ຈັດເຊັດ ຄອມພິວເຕີ (Desktop)": ["ປະກອບ + ທົດສອບຟຣີ", "ລົງ Windows ແລະ ໂປຣແກຣມຟຣີ", "ຮັບປະກັນຊິ້ນສ່ວນ 1–3 ປີ"], "ໂນ໊ດບຸ໊ກ (Laptop)": ["ເຄື່ອງ + ສາຍສາກ + ໃບຮັບປະກັນ", "ລົງ Windows ແລະ ໂປຣແກຣມພື້ນຖານຟຣີ", "ກະເປົ໋າ ຫຼື ເມົ້າ ຕາມໂປຣໂມຊັນ"], "ກາດຈໍ (GPU)": ["ຕິດຕັ້ງໃຫ້ຟຣີທີ່ຮ້ານ", "ໃບຮັບປະກັນຜູ້ຜະລິດ"], "ເກມມິ່ງເກຍ (Gaming Gear)": ["ໃບຮັບປະກັນ", "ເຊັກສິນຄ້າກ່ອນຮັບ"], "ໜ້າຈໍຄອມ (Monitor)": ["ສາຍໄຟ ແລະ ສາຍສັນຍານ ຕາມກ່ອງ", "ໃບຮັບປະກັນ", "ເຊັກສະພາບກ່ອນຮັບ"], "ອຸປະກອນເສີມ (Accessories)": ["ໃບຮັບປະກັນ 1 ປີ", "ເຊັກສິນຄ້າກ່ອນຮັບ"]};
 var dlgD=document.getElementById("detail");
 function openD(id){
   var p=P.find(function(x){return x.id===id}),vs=p.v||[],sel=Math.max(0,vs.findIndex(function(v){return v.s>0}));
-  document.getElementById("dbody").innerHTML='<div class="big" id="bigpic">'+pic(p)+'</div>'+thumbs(p)+'<div class="dinfo"><span class="brand">'+p.b+' · '+p.c+'</span><h3>'+p.n+'</h3><div class="tags">'+tagHtml(p)+'</div>'+vblock(p,sel)+'<span id="dstock" class="stock"></span><p class="desc">'+(p.desc?E(p.desc):DESC[p.c])+'</p><h4>ສະເປັກ</h4><ul class="specs">'+p.sp.map(function(s){return '<li><span>'+s[0]+'</span><b>'+s[1]+'</b></li>'}).join("")+'</ul><h4>ລວມຢູ່ໃນລາຄາ</h4><ul class="inc">'+INC[p.c].map(function(t){return '<li>'+t+'</li>'}).join("")+'</ul><div class="dact"><span id="dprice">'+priceHtml(vs.length?vp(p,sel):p)+'</span><div class="qsel"><button type="button" class="more" id="qm" aria-label="ຫຼຸດ">−</button><b id="qv" class="num">1</b><button type="button" class="more" id="qp" aria-label="ເພີ່ມ">+</button></div><button class="add" id="addD">ໃສ່ກະຕ່າ</button></div><div class="dact2"><a class="more" id="askD" target="_blank" rel="noopener" href="'+askUrl(p)+'">ສອບຖາມຜ່ານ WhatsApp</a><button class="more" id="shareD" type="button">ແຊຣ໌ລິ້ງສິນຄ້າ</button></div>'+relBlock(p)+'</div>';
+  document.getElementById("dbody").innerHTML='<div class="big" id="bigpic">'+pic(p)+'</div>'+thumbs(p)+'<div class="dinfo"><span class="brand">'+p.b+' · '+p.c+'</span><h3>'+p.n+'</h3><div class="tags">'+tagHtml(p)+'</div>'+vblock(p,sel)+'<span id="dstock" class="stock"></span><p class="desc">'+(p.desc?E(p.desc):(DESC[p.c]||""))+'</p><h4>ສະເປັກ</h4><ul class="specs">'+p.sp.map(function(s){return '<li><span>'+s[0]+'</span><b>'+s[1]+'</b></li>'}).join("")+'</ul><h4>ລວມຢູ່ໃນລາຄາ</h4><ul class="inc">'+(INC[p.c]||[]).map(function(t){return '<li>'+t+'</li>'}).join("")+'</ul><div class="dact"><span id="dprice">'+priceHtml(vs.length?vp(p,sel):p)+'</span><div class="qsel"><button type="button" class="more" id="qm" aria-label="ຫຼຸດ">−</button><b id="qv" class="num">1</b><button type="button" class="more" id="qp" aria-label="ເພີ່ມ">+</button></div><button class="add" id="addD">ໃສ່ກະຕ່າ</button></div><div class="dact2"><a class="more" id="askD" target="_blank" rel="noopener" href="'+askUrl(p)+'">ສອບຖາມຜ່ານ WhatsApp</a><button class="more" id="shareD" type="button">ແຊຣ໌ລິ້ງສິນຄ້າ</button></div>'+relBlock(p)+'</div>';
   try{history.replaceState(null,"","#p="+id)}catch(e){}
   var q=1,qv=document.getElementById("qv"),cs=function(){return vs.length?vs[sel].s:p.s};
   function refresh(){
@@ -133,7 +137,7 @@ dlgD.addEventListener("click",function(e){if(e.target===dlgD)dlgD.close()});
 dlgD.addEventListener("close",function(){try{history.replaceState(null,"",location.href.split("#")[0])}catch(e){}});
 function openFromHash(){var m=/^#p=(\d+)$/.exec(location.hash);if(!m)return;var id=+m[1];if(!dlgD.open&&P.some(function(x){return x.id===id}))openD(id)}
 window.addEventListener("hashchange",openFromHash);
-chips();draw();upd();
+P.forEach(function(p){p.c=normCat(p.c)});chips();draw();upd();
 
 document.getElementById("cats").onclick=function(e){var b=e.target.closest("[data-cat]");if(!b)return;cat=b.dataset.cat;chips();draw();document.getElementById("products").scrollIntoView({behavior:"smooth"})};
 (function(){var els=document.querySelectorAll(".rv");if(!("IntersectionObserver" in window)||(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)){els.forEach(function(e){e.classList.add("in")});return}

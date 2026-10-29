@@ -46,3 +46,7 @@ variants without a photo show the first product photo. `image` (a direct URL) st
 If `preorder: true` on the product and the product (or the chosen variant) has stock 0, the shop shows a purple "ສັ່ງຈອງ"
 ribbon/button, lets the customer add up to 20 pcs, tags the cart/WhatsApp/order line with "[ສັ່ງຈອງ]" and does not deduct stock.
 The order gets `hasPre: true`; order items get `pre: true`. Stock > 0 behaves as before (normal order, limited by stock).
+
+## Categories (6)
+Category list lives in `CATS` / `CI` (icons) / `LEG` (old name → new name) at the top of assets/js/app.js and in the `f-cat` select of the admin page.
+Keep both lists identical. DESC / INC (text shown in the product dialog) are keyed by the same names.
